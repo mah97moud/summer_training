@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/colors.dart';
 import 'package:new_app/cource_details/footer/requirements_page.dart';
 import 'package:new_app/models/course.dart';
 
@@ -45,7 +46,7 @@ class _CourseShowcaseState extends State<CourseShowcase>
           new TabBar(
             controller: _controller,
             tabs: _tabs,
-            indicatorColor: Colors.blue,
+            indicatorColor: sPrimaryOrange,
           ),
           new SizedBox.fromSize(
             size: const Size.fromHeight(200.0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/colors.dart';
 import 'package:new_app/models/course.dart';
 
 class CourseDetailBody extends StatelessWidget {
@@ -15,7 +16,7 @@ class CourseDetailBody extends StatelessWidget {
       children: <Widget>[
         new Icon(
           Icons.place,
-          color: Colors.blue,
+          color: sSDarkRed,
           size: 16.0,
         ),
         new Padding(

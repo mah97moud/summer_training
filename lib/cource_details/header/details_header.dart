@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:new_app/models/course.dart';
-
+import 'package:new_app/colors.dart';
+import '../../colors.dart';
 import 'cut_colored_image.dart';
 
 class CourseDetailHeader extends StatefulWidget {
@@ -83,12 +84,15 @@ class _CourseDetailHeaderState extends State<CourseDetailHeader> {
             borderRadius: new BorderRadius.circular(30.0),
             child: new MaterialButton(
               minWidth: 140.0,
-              color: Colors.blue,
-              textColor: Colors.white,
+              color: sPrimaryOrange,
+              textColor: sBlackText,
               onPressed: () async {
                 //TODO Handle Adopt
               },
-              child: new Text('ENROL NOW'),
+              child: new Text(
+                'ENROL NOW',
+                style: TextStyle(fontWeight: FontWeight.w700),
+              ),
             ),
           ),
         ],

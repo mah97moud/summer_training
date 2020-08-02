@@ -1,0 +1,39 @@
+name: new_app
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+   - images/logo.png
+   - images/facebook.png
+   - images/google.png
+   - images/twitter.png
+   - images/googleaccount.jpg
+   - images/coursera.png
+   - images/microsoft.jpg
+   - images/bg.png
+   - images/Background-Image.jpg
+   - assets/courses.json
+
+  fonts:
+    - family: Segoe
+      fonts:
+        - asset: fonts/Segoe.ttf
+        - asset: fonts/SegoeBold.ttf

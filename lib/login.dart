@@ -81,106 +81,13 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 40.0,
                 ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(
-                      left: 30,
-                    ),
-                    filled: true,
-                    labelText: 'Email',
-                    labelStyle: TextStyle(
-                      color: Color.fromRGBO(117, 117, 117, 1),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      fontFamily: "Segoe",
-                    ),
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(100.0),
-                      ),
-                    ),
-                  ),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
-                ),
+                buildFormFile('email', _emailController, false),
                 SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(
-                      left: 30,
-                    ),
-                    filled: true,
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                      color: Color.fromRGBO(117, 117, 117, 1),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      fontFamily: "Segoe",
-                    ),
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(100.0),
-                      ),
-                    ),
-                  ),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
-                ),
-                ListTile(
-                  title: const Text(
-                    'Company',
-                    style: TextStyle(
-                      color: sSDarkRed,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  leading: Radio(
-                    activeColor: sPrimaryOrange,
-                    value: ChooseType.isCompany,
-                    groupValue: _type,
-                    onChanged: (ChooseType value) {
-                      setState(() {
-                        _type = value;
-                      });
-                    },
-                  ),
-                ),
-                ListTile(
-                  title: const Text(
-                    'Student',
-                    style: TextStyle(
-                      color: sSDarkRed,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  leading: Radio(
-                    activeColor: sPrimaryOrange,
-                    value: ChooseType.isStudent,
-                    groupValue: _type,
-                    onChanged: (ChooseType value) {
-                      setState(() {
-                        _type = value;
-                      });
-                    },
-                  ),
-                ),
+                buildFormFile('password', _passwordController, true),
+                buildListTile('Company', ChooseType.isCompany),
+                buildListTile('Student', ChooseType.isStudent),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5.0, 15.0, 30.0, 0.0),
                   child: ButtonBar(
@@ -275,20 +182,42 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
-}
 
-Widget buildTextField(String text, bool isPassword) {
-  return Padding(
-    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-    child: TextField(
-      textAlign: TextAlign.left,
-      maxLines: 1,
+  Widget buildListTile(String value, ChooseType chooseType) {
+    return ListTile(
+      title: Text(
+        value,
+        style: TextStyle(
+          color: sSDarkRed,
+          fontSize: 25.0,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
+      leading: Radio(
+        activeColor: sPrimaryOrange,
+        value: chooseType,
+        groupValue: _type,
+        onChanged: (ChooseType value) {
+          setState(() {
+            _type = value;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget buildFormFile(
+      String value, TextEditingController controller, bool securty) {
+    return TextFormField(
+      controller: controller,
+      obscureText: securty,
+      cursorColor: sSDarkRed,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.only(
           left: 30,
         ),
         filled: true,
-        labelText: text,
+        labelText: value,
         labelStyle: TextStyle(
           color: Color.fromRGBO(117, 117, 117, 1),
           fontWeight: FontWeight.bold,
@@ -302,7 +231,12 @@ Widget buildTextField(String text, bool isPassword) {
           ),
         ),
       ),
-      obscureText: isPassword,
-    ),
-  );
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Please enter your password';
+        }
+        return null;
+      },
+    );
+  }
 }

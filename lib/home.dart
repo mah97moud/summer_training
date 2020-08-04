@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/routs.dart';
 import 'package:new_app/services/course_api.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'colors.dart';
 import 'cource_details/details_page.dart';
 import 'login.dart';
 import 'models/course.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,6 +29,14 @@ class _HomePageState extends State<HomePage> {
         await DefaultAssetBundle.of(context).loadString("assets/courses.json");
     setState(() {
       _courses = CourseApi.allCources(jsonData);
+    });
+  }
+
+  bool isLogOut = false;
+  void _logOtu() {
+    _auth.signOut();
+    setState(() {
+      isLogOut = true;
     });
   }
 
@@ -159,6 +170,7 @@ class _HomePageState extends State<HomePage> {
             RaisedButton(
               child: Text("Logout"),
               onPressed: () {
+                _logOtu();
                 Navigator.push(
                   context,
                   MaterialPageRoute(

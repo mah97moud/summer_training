@@ -135,7 +135,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   ),
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return 'Please Enter Email';
+                      return 'Please Enter password';
                     }
                     return null;
                   },

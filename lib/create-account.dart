@@ -177,7 +177,7 @@ class _CreateAccountState extends State<CreateAccount> {
     return Column(
       children: <Widget>[
         Text(
-          "Or Login With",
+          "Login With",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 25.0, color: Colors.deepOrange),
         ),
@@ -203,36 +203,6 @@ class _CreateAccountState extends State<CreateAccount> {
                 child: CircleAvatar(
                   backgroundImage: AssetImage("images/google.png"),
                   radius: 20,
-                  backgroundColor: Colors.transparent,
-                ),
-                backgroundColor: Colors.transparent,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-              child: FloatingActionButton(
-                heroTag: 'facebook',
-                onPressed: () {
-                  print("Facebook Account");
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage("images/facebook.png"),
-                  radius: 30,
-                  backgroundColor: Colors.transparent,
-                ),
-                backgroundColor: Colors.transparent,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-              child: FloatingActionButton(
-                heroTag: 'twitter',
-                onPressed: () {
-                  print("Twitter Account");
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage("images/twitter.png"),
-                  radius: 30,
                   backgroundColor: Colors.transparent,
                 ),
                 backgroundColor: Colors.transparent,

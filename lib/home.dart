@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_app/routs.dart';
 import 'package:new_app/services/course_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:new_app/services/login_with_google.dart';
 
 import 'colors.dart';
 import 'cource_details/details_page.dart';
@@ -33,8 +34,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool isLogOut = false;
-  void _logOtu() {
-    _auth.signOut();
+  void _logOut() async {
+    await _auth.signOut();
+    await googleSignIn.signOut();
     setState(() {
       isLogOut = true;
     });
@@ -170,7 +172,7 @@ class _HomePageState extends State<HomePage> {
             RaisedButton(
               child: Text("Logout"),
               onPressed: () {
-                _logOtu();
+                _logOut();
                 Navigator.push(
                   context,
                   MaterialPageRoute(

@@ -216,36 +216,6 @@ class _LoginPageState extends State<LoginPage> {
                 backgroundColor: Colors.transparent,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-              child: FloatingActionButton(
-                heroTag: 'facebook',
-                onPressed: () {
-                  print("Facebook Account");
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage("images/facebook.png"),
-                  radius: 30,
-                  backgroundColor: Colors.transparent,
-                ),
-                backgroundColor: Colors.transparent,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-              child: FloatingActionButton(
-                heroTag: 'twitter',
-                onPressed: () {
-                  print("Twitter Account");
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage("images/twitter.png"),
-                  radius: 30,
-                  backgroundColor: Colors.transparent,
-                ),
-                backgroundColor: Colors.transparent,
-              ),
-            ),
           ],
         ),
       ],

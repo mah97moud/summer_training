@@ -167,19 +167,41 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: ButtonBar(
+        child: Column(
           children: <Widget>[
-            RaisedButton(
-              child: Text("Logout"),
-              onPressed: () {
-                _logOut();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => LoginPage(),
-                  ),
-                );
-              },
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 16.0),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(imageUrl),
+                radius: 60,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                name,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ButtonBar(
+              alignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  child: Text("Logout"),
+                  onPressed: () {
+                    _logOut();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => LoginPage(),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),

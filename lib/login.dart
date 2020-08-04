@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/colors.dart';
+import 'package:new_app/entering_course/second_home.dart';
 import 'package:new_app/services/login_with_google.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'create-account.dart';
 import 'home.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+
+enum ChooseType { isCompany, isStudent }
 
 class LoginPage extends StatefulWidget {
   @override
@@ -18,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _success;
   String _userEmail;
+
+  ChooseType _type = ChooseType.isCompany;
   void _signInWithEmailAndPassword() async {
     final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
       email: _emailController.text.trim(),
@@ -68,9 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                   children: <Widget>[
                     CircleAvatar(
                       backgroundImage: AssetImage("images/logo.png"),
-                      radius: 90,
+                      radius: 50,
                       backgroundColor: Colors.transparent,
-                    ),
+                    )
                   ],
                 ),
                 SizedBox(
@@ -136,6 +141,46 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
+                ListTile(
+                  title: const Text(
+                    'Company',
+                    style: TextStyle(
+                      color: sSDarkRed,
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  leading: Radio(
+                    activeColor: sPrimaryOrange,
+                    value: ChooseType.isCompany,
+                    groupValue: _type,
+                    onChanged: (ChooseType value) {
+                      setState(() {
+                        _type = value;
+                      });
+                    },
+                  ),
+                ),
+                ListTile(
+                  title: const Text(
+                    'Student',
+                    style: TextStyle(
+                      color: sSDarkRed,
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  leading: Radio(
+                    activeColor: sPrimaryOrange,
+                    value: ChooseType.isStudent,
+                    groupValue: _type,
+                    onChanged: (ChooseType value) {
+                      setState(() {
+                        _type = value;
+                      });
+                    },
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5.0, 15.0, 30.0, 0.0),
                   child: ButtonBar(
@@ -161,9 +206,18 @@ class _LoginPageState extends State<LoginPage> {
                           if (_formKey.currentState.validate()) {
                             _signInWithEmailAndPassword();
                             if (_success) {
+                              imageUrl =
+                                  'https://scontent.fcai21-1.fna.fbcdn.net/v/t1.0-9/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=fwASFdSqsjAAX9vvrkr&_nc_ht=scontent.fcai21-1.fna&oh=310408dea3df86cfd4e1c18a36f0987c&oe=5F4FC717';
                               Navigator.of(context)
                                   .push(MaterialPageRoute(builder: (context) {
-                                return HomePage();
+                                switch (_type) {
+                                  case ChooseType.isCompany:
+                                    return SecondHome();
+                                    break;
+                                  case ChooseType.isStudent:
+                                    return HomePage();
+                                    break;
+                                }
                               }));
                             }
                           }
@@ -185,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       children: <Widget>[
         Text(
-          "Or Login With",
+          "Login With",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 25.0, color: Colors.deepOrange),
         ),

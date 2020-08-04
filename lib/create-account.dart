@@ -68,7 +68,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 Column(
                   children: <Widget>[
                     Hero(
-                      tag: 'create',
+                      tag: 'logo',
                       child: CircleAvatar(
                         backgroundImage: AssetImage("images/logo.png"),
                         radius: 90,

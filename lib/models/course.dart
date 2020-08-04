@@ -1,17 +1,17 @@
 import 'package:meta/meta.dart';
 
-class Course{
-  final int id;
-  final String companyName;
-  final String companyPictureUrl;
-  final String courseName;
-  final String coursePictureUrl;
-  final int maxNoOfStudent;
-  final String location;
-  final String descreption;
-  final int noOfHours;
-  final int noOfWeeks;
-  final String qualification;
+class Course {
+  int id;
+  String companyName;
+  String companyPictureUrl;
+  String courseName;
+  String coursePictureUrl;
+  int maxNoOfStudent;
+  String location;
+  String descreption;
+  int noOfHours;
+  int noOfWeeks;
+  String qualification;
 
   Course({
     @required this.id,

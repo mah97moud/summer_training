@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/services/login_with_google.dart';
 
 import 'create-account.dart';
+import 'home.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +76,77 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildButtonBar() {
+    return Column(
+      children: <Widget>[
+        Text(
+          "Or Login With",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 25.0, color: Colors.deepOrange),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.min,
+          alignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+              child: FloatingActionButton(
+                heroTag: 'google',
+                onPressed: () {
+                  signInWithGoogle().whenComplete(() => {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return HomePage();
+                        }))
+                      });
+                },
+                child: CircleAvatar(
+                  backgroundImage: AssetImage("images/google.png"),
+                  radius: 20,
+                  backgroundColor: Colors.transparent,
+                ),
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+              child: FloatingActionButton(
+                heroTag: 'facebook',
+                onPressed: () {
+                  print("Facebook Account");
+                },
+                child: CircleAvatar(
+                  backgroundImage: AssetImage("images/facebook.png"),
+                  radius: 30,
+                  backgroundColor: Colors.transparent,
+                ),
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+              child: FloatingActionButton(
+                heroTag: 'twitter',
+                onPressed: () {
+                  print("Twitter Account");
+                },
+                child: CircleAvatar(
+                  backgroundImage: AssetImage("images/twitter.png"),
+                  radius: 30,
+                  backgroundColor: Colors.transparent,
+                ),
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

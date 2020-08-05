@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/home.dart';
-import 'package:new_app/services/login_with_google.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:new_app/widgets/widgets.dart';
-
-import 'colors.dart';
-import 'login.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -20,6 +16,7 @@ class _CreateAccountState extends State<CreateAccount> {
   final TextEditingController _passwordController = TextEditingController();
   bool _success;
   String _userEmail;
+  bool _showSpinner = false;
 
   void _register() async {
     try {
@@ -29,14 +26,15 @@ class _CreateAccountState extends State<CreateAccount> {
           .user;
       if (user != null) {
         setState(() {
-          _success = true;
           _userEmail = user.email;
         });
+        Navigator.of(context).pushNamed('/login');
       } else {
-        setState(() {
-          _success = true;
-        });
+        print("Error");
       }
+      setState(() {
+        _showSpinner = false;
+      });
     } catch (e) {
       print(e);
     }
@@ -57,64 +55,67 @@ class _CreateAccountState extends State<CreateAccount> {
         actions: <Widget>[],
         backgroundColor: Colors.orange[400],
       ),
-      body: Form(
-        key: _formKey,
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("images/bg.png"), fit: BoxFit.cover),
-          ),
-          child: SafeArea(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              children: <Widget>[
-                SizedBox(
-                  height: 5.0,
-                ),
-                Column(
-                  children: <Widget>[
-                    Hero(
-                      tag: 'logo',
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage("images/logo.png"),
-                        radius: 90,
-                        backgroundColor: Colors.transparent,
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                buildFormFile('email', _emailController, false, Icons.email),
-                SizedBox(
-                  height: 5.0,
-                ),
-                buildFormFile(
-                    'password', _passwordController, true, Icons.lock),
-                SizedBox(
-                  height: 5.0,
-                ),
-                ButtonBar(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 90.0),
-                      child: RaisedButton(
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            _register();
-                            if (_success) {
-                              Navigator.of(context).pushNamed('/login');
+      body: ModalProgressHUD(
+        inAsyncCall: _showSpinner,
+        child: Form(
+          key: _formKey,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("images/bg.png"), fit: BoxFit.cover),
+            ),
+            child: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                children: <Widget>[
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Hero(
+                        tag: 'logo',
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage("images/logo.png"),
+                          radius: 90,
+                          backgroundColor: Colors.transparent,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  buildFormFile('email', _emailController, false, Icons.email),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  buildFormFile(
+                      'password', _passwordController, true, Icons.lock),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  ButtonBar(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 90.0),
+                        child: RaisedButton(
+                          onPressed: () async {
+                            setState(() {
+                              _showSpinner = true;
+                            });
+                            if (_formKey.currentState.validate()) {
+                              _register();
                             }
-                          }
-                        },
-                        child: Text("Create Account"),
+                          },
+                          child: Text("Create Account"),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                buildButtonBar(context),
-              ],
+                    ],
+                  ),
+                  buildButtonBar(context),
+                ],
+              ),
             ),
           ),
         ),

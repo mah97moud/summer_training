@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/colors.dart';
-import 'package:new_app/entering_course/second_home.dart';
 import 'package:new_app/services/login_with_google.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:new_app/widgets/widgets.dart';
@@ -25,27 +24,30 @@ class _LoginPageState extends State<LoginPage> {
 
   ChooseType _type = ChooseType.isCompany;
   void _signInWithEmailAndPassword() async {
-    final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text,
-    ))
-        .user;
+    try {
+      final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      ))
+          .user;
 
-    if (user != null) {
-      setState(() {
-        _success = true;
-        _userEmail = user.email;
-      });
-    } else {
-      setState(() {
-        _success = false;
-      });
+      if (user != null) {
+        setState(() {
+          _success = true;
+          _userEmail = user.email;
+        });
+      } else {
+        setState(() {
+          _success = false;
+        });
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -100,13 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                           "Create",
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  CreateAccount(),
-                            ),
-                          );
+                          Navigator.of(context).pushNamed('/createAcount');
                         },
                       ),
                       RaisedButton(
@@ -117,19 +113,15 @@ class _LoginPageState extends State<LoginPage> {
                             if (_success) {
                               imageUrl =
                                   'https://scontent.fcai21-1.fna.fbcdn.net/v/t1.0-9/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=fwASFdSqsjAAX9vvrkr&_nc_ht=scontent.fcai21-1.fna&oh=310408dea3df86cfd4e1c18a36f0987c&oe=5F4FC717';
-
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) {
-                                name = _userEmail;
-                                switch (_type) {
-                                  case ChooseType.isCompany:
-                                    return SecondHome();
-                                    break;
-                                  case ChooseType.isStudent:
-                                    return HomePage();
-                                    break;
-                                }
-                              }));
+                              name = _userEmail;
+                              switch (_type) {
+                                case ChooseType.isCompany:
+                                  Navigator.of(context).pushNamed('/first');
+                                  break;
+                                case ChooseType.isStudent:
+                                  Navigator.of(context).pushNamed('/homePage');
+                                  break;
+                              }
                             }
                           }
                         },

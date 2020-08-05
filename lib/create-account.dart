@@ -22,19 +22,23 @@ class _CreateAccountState extends State<CreateAccount> {
   String _userEmail;
 
   void _register() async {
-    final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text))
-        .user;
-    if (user != null) {
-      setState(() {
-        _success = true;
-        _userEmail = user.email;
-      });
-    } else {
-      setState(() {
-        _success = true;
-      });
+    try {
+      final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
+              email: _emailController.text.trim(),
+              password: _passwordController.text))
+          .user;
+      if (user != null) {
+        setState(() {
+          _success = true;
+          _userEmail = user.email;
+        });
+      } else {
+        setState(() {
+          _success = true;
+        });
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -100,10 +104,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           if (_formKey.currentState.validate()) {
                             _register();
                             if (_success) {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) {
-                                return LoginPage();
-                              }));
+                              Navigator.of(context).pushNamed('/login');
                             }
                           }
                         },

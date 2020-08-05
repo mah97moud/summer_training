@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/create-account.dart';
 
 import 'colors.dart';
+import 'entering_course/basics_info.dart';
+import 'entering_course/sceondary_info.dart';
 import 'home.dart';
 import 'login.dart';
+import 'models/course.dart';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Course ourCourse = new Course(
+      id: null,
+      companyName: null,
+      companyPictureUrl: null,
+      courseName: null,
+      coursePictureUrl: null,
+      maxNoOfStudent: null,
+      location: null,
+      descreption: null,
+      noOfHours: null,
+      noOfWeeks: null,
+      qualification: null,
+    );
+
     return MaterialApp(
       title: 'Summer Training',
       theme: _summerTrainingTheme,
@@ -15,6 +33,17 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/login',
       onGenerateRoute: _getRoute,
+      routes: {
+        '/login': (context) => LoginPage(),
+        '/createAcount': (context) => CreateAccount(),
+        '/homePage': (context) => HomePage(),
+        '/first': (context) => FirstPageInfo(
+              course: ourCourse,
+            ),
+        '/second': (context) => SecondPageInfo(
+              course: ourCourse,
+            ),
+      },
     );
   }
 

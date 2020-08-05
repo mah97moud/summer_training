@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:new_app/home.dart';
 import 'package:new_app/services/login_with_google.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:new_app/widgets/widgets.dart';
 
+import 'colors.dart';
 import 'login.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -80,66 +82,12 @@ class _CreateAccountState extends State<CreateAccount> {
                 SizedBox(
                   height: 10.0,
                 ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(
-                      left: 30,
-                    ),
-                    filled: true,
-                    labelText: 'Email',
-                    labelStyle: TextStyle(
-                      color: Color.fromRGBO(117, 117, 117, 1),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      fontFamily: "Segoe",
-                    ),
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(100.0),
-                      ),
-                    ),
-                  ),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return 'Please Enter Email';
-                    }
-                    return null;
-                  },
-                ),
+                buildFormFile('email', _emailController, false, Icons.email),
                 SizedBox(
                   height: 5.0,
                 ),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(
-                      left: 30,
-                    ),
-                    filled: true,
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                      color: Color.fromRGBO(117, 117, 117, 1),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      fontFamily: "Segoe",
-                    ),
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(100.0),
-                      ),
-                    ),
-                  ),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return 'Please Enter password';
-                    }
-                    return null;
-                  },
-                ),
+                buildFormFile(
+                    'password', _passwordController, true, Icons.lock),
                 SizedBox(
                   height: 5.0,
                 ),
@@ -154,7 +102,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             if (_success) {
                               Navigator.of(context)
                                   .push(MaterialPageRoute(builder: (context) {
-                                return HomePage();
+                                return LoginPage();
                               }));
                             }
                           }
@@ -164,53 +112,12 @@ class _CreateAccountState extends State<CreateAccount> {
                     ),
                   ],
                 ),
-                buildButtonBar(),
+                buildButtonBar(context),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildButtonBar() {
-    return Column(
-      children: <Widget>[
-        Text(
-          "Login With",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 25.0, color: Colors.deepOrange),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        ButtonBar(
-          mainAxisSize: MainAxisSize.min,
-          alignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-              child: FloatingActionButton(
-                heroTag: 'google',
-                onPressed: () {
-                  signInWithGoogle().whenComplete(() => {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return HomePage();
-                        }))
-                      });
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage("images/google.png"),
-                  radius: 20,
-                  backgroundColor: Colors.transparent,
-                ),
-                backgroundColor: Colors.transparent,
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

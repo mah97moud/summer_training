@@ -3,6 +3,7 @@ import 'package:new_app/colors.dart';
 import 'package:new_app/entering_course/second_home.dart';
 import 'package:new_app/services/login_with_google.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:new_app/widgets/widgets.dart';
 import 'create-account.dart';
 import 'home.dart';
 
@@ -81,11 +82,12 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 40.0,
                 ),
-                buildFormFile('email', _emailController, false),
+                buildFormFile('email', _emailController, false, Icons.email),
                 SizedBox(
                   height: 20,
                 ),
-                buildFormFile('password', _passwordController, true),
+                buildFormFile(
+                    'password', _passwordController, true, Icons.lock),
                 buildListTile('Company', ChooseType.isCompany),
                 buildListTile('Student', ChooseType.isStudent),
                 Padding(
@@ -115,8 +117,10 @@ class _LoginPageState extends State<LoginPage> {
                             if (_success) {
                               imageUrl =
                                   'https://scontent.fcai21-1.fna.fbcdn.net/v/t1.0-9/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=fwASFdSqsjAAX9vvrkr&_nc_ht=scontent.fcai21-1.fna&oh=310408dea3df86cfd4e1c18a36f0987c&oe=5F4FC717';
+
                               Navigator.of(context)
                                   .push(MaterialPageRoute(builder: (context) {
+                                name = _userEmail;
                                 switch (_type) {
                                   case ChooseType.isCompany:
                                     return SecondHome();
@@ -133,53 +137,12 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                buildButtonBar(),
+                buildButtonBar(context),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildButtonBar() {
-    return Column(
-      children: <Widget>[
-        Text(
-          "Login With",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 25.0, color: Colors.deepOrange),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        ButtonBar(
-          mainAxisSize: MainAxisSize.min,
-          alignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-              child: FloatingActionButton(
-                heroTag: 'google',
-                onPressed: () {
-                  signInWithGoogle().whenComplete(() => {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return HomePage();
-                        }))
-                      });
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage("images/google.png"),
-                  radius: 20,
-                  backgroundColor: Colors.transparent,
-                ),
-                backgroundColor: Colors.transparent,
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 
@@ -203,40 +166,6 @@ class _LoginPageState extends State<LoginPage> {
           });
         },
       ),
-    );
-  }
-
-  Widget buildFormFile(
-      String value, TextEditingController controller, bool securty) {
-    return TextFormField(
-      controller: controller,
-      obscureText: securty,
-      cursorColor: sSDarkRed,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.only(
-          left: 30,
-        ),
-        filled: true,
-        labelText: value,
-        labelStyle: TextStyle(
-          color: Color.fromRGBO(117, 117, 117, 1),
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
-          fontFamily: "Segoe",
-        ),
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(100.0),
-          ),
-        ),
-      ),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Please enter your password';
-        }
-        return null;
-      },
     );
   }
 }

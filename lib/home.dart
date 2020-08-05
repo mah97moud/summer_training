@@ -3,6 +3,7 @@ import 'package:new_app/routs.dart';
 import 'package:new_app/services/course_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:new_app/services/login_with_google.dart';
+import 'package:new_app/widgets/widgets.dart';
 
 import 'colors.dart';
 import 'cource_details/details_page.dart';
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                           ButtonBar(
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              cardButton(course, course.id),
+                              cardButton(context, course, course.id),
                             ],
                           ),
                         ],
@@ -99,68 +100,6 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }).toList();
-  }
-
-  Widget cardCircularImage(String path) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 0.0),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: CircleAvatar(
-          backgroundImage: AssetImage(path),
-          radius: 50.0,
-          backgroundColor: Colors.transparent,
-        ),
-      ),
-    );
-  }
-
-  Widget cardTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 15.0,
-      ),
-      child: Text(
-        title ?? "defualt Title",
-      ),
-    );
-  }
-
-  Widget cardText(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 15.0,
-        top: 10.0,
-      ),
-      child: SizedBox(
-        width: 190,
-        height: 80,
-        child: Text(
-          text ?? "defualt card Text",
-          softWrap: true,
-          overflow: TextOverflow.fade,
-        ),
-      ),
-    );
-  }
-
-  Widget cardButton(Course course, Object id) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 15.0),
-      child: RaisedButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            new FadePageRoute(
-              builder: (c) {
-                return new CourseDetailsPage(course, id: id);
-              },
-              settings: RouteSettings(),
-            ),
-          );
-        },
-        child: Text("More Details"),
-      ),
-    );
   }
 
   @override
